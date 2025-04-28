@@ -1,28 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
     <title>CryptoRadar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="static/logo.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+        }
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .header {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .nav-link {
+            color: #f8f9fa !important;
+            font-weight: bold;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        .nav-link:hover {
+            color: #ffa500 !important; 
+        }
+        .navbar-brand img {
+            height: 95px; 
+        }
+    </style>
 </head>
 <body>
+
+<div id="particles-js"></div>
+
+<header class="header">
     <div class="container">
-        <h1>Dashboard da CryptoRadar!</h1>
-        <h2>Preço da Crypto</h2>
-        <p>Bitcoin (USD): $ 
-            {{dados['bitcoin']['usd']}}
-        </p>
-        <p>Bitcoin (BRL): R$ 
-            {{dados['bitcoin']['brl']}}
-        </p>
-        <p>Ethereum (USD): $ 
-            {{dados['ethereum']['usd']}}
-        </p>
-        <p>Ethereum (BRL): R$ 
-            {{dados['ethereum']['brl']}}
-        </p>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">
+                <img src="static/logo.png" alt="CryptoRadar Logo">
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-link" href="{{ url_for('cadastro') }}">Cadastro</a>
+                <a class="nav-link" href="{{ url_for('cryptoia') }}">CryptoRadarIA</a>
+            </div>
+        </nav>
     </div>
-    
+</header>
+
+<div class="container-lg my-5" id="dashboard">
+    <h1 class="text-center mb-5">CryptoRadar Dashboard</h1>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title mb-3">Bitcoin</h2>
+                <p class="card-text">💵 USD: $ <strong>{{ dados['bitcoin']['usd'] }}</strong></p>
+                <p class="card-text">💰 BRL: R$ <strong>{{ dados['bitcoin']['brl'] }}</strong></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title mb-3">Ethereum</h2>
+                <p class="card-text">💵 USD: $ <strong>{{ dados['ethereum']['usd'] }}</strong></p>
+                <p class="card-text">💰 BRL: R$ <strong>{{ dados['ethereum']['brl'] }}</strong></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title mb-3">Solana</h2>
+                <p class="card-text">💵 USD: $ <strong>{{ dados['solana']['usd'] }}</strong></p>
+                <p class="card-text">💰 BRL: R$ <strong>{{ dados['solana']['brl'] }}</strong></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title mb-3">Cardano</h2>
+                <p class="card-text">💵 USD: $ <strong>{{ dados['cardano']['usd'] }}</strong></p>
+                <p class="card-text">💰 BRL: R$ <strong>{{ dados['cardano']['brl'] }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: "#ffffff"
+            },
+            shape: {
+                type: "circle",
+                stroke: {
+                    width: 0,
+                    color: "#000000"
+                }
+            },
+            opacity: {
+                value: 0.5,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 3,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 40,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 6,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: "repulse"
+                },
+                onclick: {
+                    enable: true,
+                    mode: "push"
+                },
+                resize: true
+            }
+        },
+        retina_detect: true
+    });
+</script>
 </body>
 </html>
