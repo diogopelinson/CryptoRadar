@@ -1,182 +1,201 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoRadar</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="static/logo.ico" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <style>
-        body {
-            background-color: #121212;
-            margin: 0;
-            padding: 0;
-        }
-        #particles-js {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .header {
-            background-color: #1e1e1e;
-            padding: 15px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar-nav {
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .nav-link {
-            color: #f8f9fa !important;
-            font-weight: bold;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        .nav-link:hover {
-            color: #ffa500 !important; 
-        }
-        .navbar-brand img {
-            height: 95px; 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoRadar</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="static/logo.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    body {
+      background-color: #121212;
+      margin: 0;
+      padding: 0;
+    }
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .header {
+      background-color: #1e1e1e;
+      padding: 15px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-nav {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .nav-link {
+      color: #f8f9fa !important;
+      font-weight: bold;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+    .nav-link:hover {
+      color: #ffa500 !important;
+    }
+    .navbar-brand img {
+      height: 95px;
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .price-icon {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-right: 5px;
+    }
+    .card {
+      transition: all 0.3s ease;
+      background-color: #1e1e1e;
+      border: none;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+    }
+    .dashboard-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #fff;
+        text-shadow: 0 0 0.2px #ffffff, 0 0 4px #ffffff, 0 0 6px #ffffff;  
+        margin-bottom: 30px;
+        animation: pulse 6s infinite;
+    }
+    @keyframes pulse {
+      0% { text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff, 0 0 1px #ffffff; }
+      50% { text-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff, 0 0 23px #ffffff; }
+      100% { text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff, 0 0 1px #ffffff; }
+    }
+    .btn-refresh {
+      display: block;
+      margin: 20px auto;
+      padding: 8px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #ffffff;
+      border: 2px solid #ffffff;
+      border-radius: 30px;
+      color: #121212;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .btn-refresh:hover {
+      background-color: #121212;
+      color: #ffffff;
+    }
+  </style>
 </head>
 <body>
 
 <div id="particles-js"></div>
 
 <header class="header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#">
-                <img src="static/logo.png" alt="CryptoRadar Logo">
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                <a class="nav-link" href="{{ url_for('cadastro') }}">Cadastro</a>
-                <a class="nav-link" href="{{ url_for('cryptoia') }}">CryptoRadarIA</a>
-            </div>
-        </nav>
-    </div>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand" href="#">
+        <img src="static/logo.png" alt="CryptoRadar Logo">
+      </a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        <a class="nav-link" href="{{ url_for('cadastro') }}">Cadastro</a>
+        <a class="nav-link" href="{{ url_for('cryptoia') }}">CryptoRadarIA</a>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <div class="container-lg my-5" id="dashboard">
-    <h1 class="text-center mb-5">CryptoRadar Dashboard</h1>
-    <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card shadow-sm p-4">
-                <h2 class="card-title mb-3">Bitcoin</h2>
-                <p class="card-text">💵 USD: $ <strong>{{ dados['bitcoin']['usd'] }}</strong></p>
-                <p class="card-text">💰 BRL: R$ <strong>{{ dados['bitcoin']['brl'] }}</strong></p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm p-4">
-                <h2 class="card-title mb-3">Ethereum</h2>
-                <p class="card-text">💵 USD: $ <strong>{{ dados['ethereum']['usd'] }}</strong></p>
-                <p class="card-text">💰 BRL: R$ <strong>{{ dados['ethereum']['brl'] }}</strong></p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm p-4">
-                <h2 class="card-title mb-3">Solana</h2>
-                <p class="card-text">💵 USD: $ <strong>{{ dados['solana']['usd'] }}</strong></p>
-                <p class="card-text">💰 BRL: R$ <strong>{{ dados['solana']['brl'] }}</strong></p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm p-4">
-                <h2 class="card-title mb-3">Cardano</h2>
-                <p class="card-text">💵 USD: $ <strong>{{ dados['cardano']['usd'] }}</strong></p>
-                <p class="card-text">💰 BRL: R$ <strong>{{ dados['cardano']['brl'] }}</strong></p>
-            </div>
-        </div>
+  <h1 class="dashboard-title">CryptoRadar Dashboard</h1>
+
+  <div class="row g-4 mt-4">
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm p-4 text-center">
+        <i class="fab fa-bitcoin card-icon" style="color: #f7931a;"></i>
+        <h2 class="card-title mb-3">Bitcoin</h2>
+        <p class="card-text"><i class="fas fa-dollar-sign price-icon"></i>USD: $ <strong>{{ "{:,.2f}".format(dados['bitcoin']['usd']) }}</strong></p>
+        <p class="card-text"><i class="fas fa-money-bill-wave price-icon"></i>BRL: R$ <strong>{{ "{:,.2f}".format(dados['bitcoin']['brl']) }}</strong></p>
+      </div>
     </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm p-4 text-center">
+        <i class="fab fa-ethereum card-icon" style="color: #3c3c3d;"></i>
+        <h2 class="card-title mb-3">Ethereum</h2>
+        <p class="card-text"><i class="fas fa-dollar-sign price-icon"></i>USD: $ <strong>{{ "{:,.2f}".format(dados['ethereum']['usd']) }}</strong></p>
+        <p class="card-text"><i class="fas fa-money-bill-wave price-icon"></i>BRL: R$ <strong>{{ "{:,.2f}".format(dados['ethereum']['brl']) }}</strong></p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm p-4 text-center">
+        <i class="fas fa-coins card-icon" style="color: #00ffa3;"></i>
+        <h2 class="card-title mb-3">Solana</h2>
+        <p class="card-text"><i class="fas fa-dollar-sign price-icon"></i>USD: $ <strong>{{ "{:,.2f}".format(dados['solana']['usd']) }}</strong></p>
+        <p class="card-text"><i class="fas fa-money-bill-wave price-icon"></i>BRL: R$ <strong>{{ "{:,.2f}".format(dados['solana']['brl']) }}</strong></p>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm p-4 text-center">
+        <i class="fas fa-wallet card-icon" style="color: #0033ad;"></i>
+        <h2 class="card-title mb-3">Cardano</h2>
+        <p class="card-text"><i class="fas fa-dollar-sign price-icon"></i>USD: $ <strong>{{ "{:,.2f}".format(dados['cardano']['usd']) }}</strong></p>
+        <p class="card-text"><i class="fas fa-money-bill-wave price-icon"></i>BRL: R$ <strong>{{ "{:,.2f}".format(dados['cardano']['brl']) }}</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-refresh" onclick="location.reload()">Atualizar Cotações</button>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: "#ffffff"
-            },
-            shape: {
-                type: "circle",
-                stroke: {
-                    width: 0,
-                    color: "#000000"
-                }
-            },
-            opacity: {
-                value: 0.5,
-                random: true,
-                anim: {
-                    enable: true,
-                    speed: 1,
-                    opacity_min: 0.1,
-                    sync: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: true,
-                    speed: 40,
-                    size_min: 0.1,
-                    sync: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: "#ffffff",
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 6,
-                direction: "none",
-                random: true,
-                straight: false,
-                out_mode: "out",
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: "repulse"
-                },
-                onclick: {
-                    enable: true,
-                    mode: "push"
-                },
-                resize: true
-            }
-        },
-        retina_detect: true
-    });
+particlesJS('particles-js', {
+    particles: {
+      number: { value: 80, density: { enable: true, value_area: 800 } },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: {
+        value: 0.5,
+        random: true,
+        anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: { enable: true, speed: 40, size_min: 0.1, sync: false }
+      },
+      line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+      move: { enable: true, speed: 6, random: true, out_mode: "out" }
+    },
+    interactivity: {
+      events: {
+        onhover: { enable: true, mode: "repulse" },
+        onclick: { enable: true, mode: "push" },
+        resize: true
+      }
+    },
+    retina_detect: true
+});
 </script>
+
 </body>
 </html>
