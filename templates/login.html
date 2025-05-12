@@ -1,31 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoRadar</title>
-</head>
-<body>
-    <!-- login.html -->
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - CryptoRadar</title>
-</head>
-<body>
-    <h1>Bem-vindo ao CryptoRadar</h1>
-    <form method="POST" action="/login">
-        <label for="username">Usuário</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Senha</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Entrar</button>
-    </form>
-</body>
-</html>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - CryptoRadar</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
 
-    
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background-color: #282828;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .form-control {
+      background-color: #333;
+      border: none;
+      color: #fff;
+    }
+
+    .form-control::placeholder {
+      color: #bbb;
+    }
+
+    .btn-primary {
+      background-color: #512da8;
+      border: none;
+      width: 100%;
+    }
+
+    .btn-danger {
+      margin-top: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="login-wrapper">
+    <div class="login-box">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class="list-unstyled">
+            {% for message in messages %}
+              <li class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('autenticar') }}">
+        <h1>Login</h1>
+        <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+        {{ form.csrf_token() }}
+
+        <div class="form-group mb-3">
+          {{ form.usuario.label(class="form-label") }}
+          {{ form.usuario(class="form-control", placeholder="Digite seu usuário") }}
+        </div>
+
+        <div class="form-group mb-4">
+          {{ form.senha.label(class="form-label") }}
+          {{ form.senha(class="form-control", placeholder="Digite sua senha") }}
+        </div>
+
+        {{ form.login(class="btn btn-primary") }}
+        <a href="{{ url_for('index') }}" class="btn btn-danger">Voltar</a>
+      </form>
+    </div>
+  </div>
+
+  <script src="../static/app.js"></script>
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: {
+          value: 0.5,
+          random: true,
+          anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: { enable: true, speed: 40, size_min: 0.1, sync: false }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
+        },
+        move: { enable: true, speed: 6, random: true, out_mode: "out" }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        }
+      },
+      retina_detect: true
+    });
+  </script>
 </body>
 </html>

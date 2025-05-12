@@ -10,96 +10,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="static/logo.ico" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+ 
+  <link href="{{ url_for('static', filename='style_index.css') }}" rel="stylesheet">
 </head>
 
-<style>
-  body {
-  background-color: #121212;
-  margin: 0;
-  padding: 0;
-}
-#particles-js {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-.header {
-  background-color: #1e1e1e;
-  padding: 15px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.navbar-nav {
-  margin-left: auto;
-  margin-right: auto;
-}
-.nav-link {
-  color: #f8f9fa !important;
-  font-weight: bold;
-  margin: 0 15px;
-  font-size: 18px;
-}
-.nav-link:hover {
-  color: #ffa500 !important;
-}
-.navbar-brand img {
-  height: 95px;
-}
-.card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-.price-icon {
-  font-size: 1.2rem;
-  color: #ffffff;
-  margin-right: 5px;
-}
-.card {
-  transition: all 0.3s ease;
-  background-color: #1e1e1e;
-  border: none;
-}
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
-}
-.dashboard-title {
-  text-align: center;
-  font-size: 2.5rem;
-  color: #fff;
-  text-shadow: 0 0 0.2px #ffffff, 0 0 4px #ffffff, 0 0 6px #ffffff;  
-  margin-bottom: 30px;
-  animation: pulse 6s infinite;
-}
-@keyframes pulse {
-  0% { text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff, 0 0 1px #ffffff; }
-  50% { text-shadow: 0 0 2px #ffffff, 0 0 3px #ffffff, 0 0 23px #ffffff; }
-  100% { text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff, 0 0 1px #ffffff; }
-}
-.btn-refresh {
-  display: block;
-  margin: 20px auto;
-  padding: 8px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #ffffff;
-  border: 2px solid #ffffff;
-  border-radius: 30px;
-  color: #121212;
-  transition: background-color 0.3s, color 0.3s;
-}
-.btn-refresh:hover {
-  background-color: #121212;
-  color: #ffffff;
-}
-</style>
 <body>
 
 <div id="particles-js"></div>
@@ -112,12 +26,24 @@
       </a>
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-        <a class="nav-link" href="{{ url_for('cadastro') }}">Cadastro</a>
         <a class="nav-link" href="{{ url_for('cryptoia') }}">CryptoRadarIA</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
       </div>
     </nav>
   </div>
 </header>
+
+<div class="container mt-3">
+  {% with mensagens = get_flashed_messages() %}
+    {% if mensagens %}
+      {% for msg in mensagens %}
+        <div class="alert alert-success" role="alert">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
 
 <div class="container-lg my-5" id="dashboard">
   <h1 class="dashboard-title">CryptoRadar Dashboard</h1>
