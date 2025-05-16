@@ -1,7 +1,7 @@
 from flask import render_template, request, session, redirect, flash, url_for
-from utils.helpers import FormularioUsuario
+from utils.helpers import FormularioUsuario, PerguntaForm
 from database.models import Usuarios
-from main import app
+from main import app, genai
 from flask_bcrypt import check_password_hash
 import requests
 
@@ -46,7 +46,52 @@ def logout():
 
 
 # Rota de Cryptoia
-@app.route('/cryptoia')
+@app.route('/cryptoia', methods=['GET', 'POST'])
 def cryptoia():
-    return render_template("cryptoia.html")
+    form = PerguntaForm()
+    resposta = None
 
+    try:
+        model = genai.GenerativeModel('gemini-1.5-flash-latest') 
+
+
+    except Exception as e:
+        erro_msg = f"Erro de configuração da IA ou inicialização do modelo: {e}"
+        print(erro_msg)
+        flash(erro_msg + " Por favor, verifique a chave API e a configuração em main.py.", "danger")
+        return render_template("cryptoia.html", form=form, resposta=None)
+
+
+    if form.validate_on_submit():
+        pergunta_usuario = form.pergunta.data
+        
+      
+        persona_contexto = (
+            "Você é um especialista altamente qualificado em Bitcoin e outras criptomoedas. "
+            "Sua tarefa é responder a perguntas de forma **direta, concisa, informativa e precisa**. " 
+            "Foque em conceitos técnicos, históricos, casos de uso e notícias relevantes. "
+            "**EVITE enrolação ou respostas vagas.** Vá direto ao ponto. " 
+            "Evite dar conselhos financeiros ou previsões de preços. "
+            "Responda à seguinte pergunta:\n\n"
+        )
+        
+        prompt_completo = persona_contexto + pergunta_usuario
+
+        try:
+            response = model.generate_content(
+                prompt_completo, 
+                generation_config=genai.types.GenerationConfig(
+                    temperature=0.1,
+                    max_output_tokens=700,
+                )
+            )
+            resposta = response.text
+            if not resposta:
+                 resposta = "A IA não conseguiu gerar uma resposta para esta pergunta."
+
+        except Exception as e:
+            resposta = f"Erro ao gerar resposta da IA: {e}"
+            print(resposta)
+            flash(resposta, "danger")
+
+    return render_template("cryptoia.html", form=form, resposta=resposta)

@@ -151,3 +151,11 @@ body {
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
+
+.btn-white-center {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  display: block;
+  margin: 0 auto;
+}

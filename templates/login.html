@@ -92,8 +92,13 @@
           {{ form.senha(class="form-control", placeholder="Digite sua senha") }}
         </div>
 
-        {{ form.login(class="btn btn-primary") }}
-        <a href="{{ url_for('index') }}" class="btn btn-danger">Voltar</a>
+        {{ form.login(class="btn btn-white-center") }}
+        <div class="text-center" style="padding: 0 70px;">
+          <a href="{{ url_for('index') }}" class="btn btn-danger">
+            Voltar
+          </a>
+        </div>
+</div>
       </form>
     </div>
   </div>

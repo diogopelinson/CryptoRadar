@@ -1,12 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoRadar</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CryptoIA - Chatbot de Criptomoedas</title>
+
+  <!-- Estilos e Particles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link href="{{ url_for('static', filename='style_cryptoia.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 </head>
-<body>
-    <h1>Digite sua pergunta a CryptoRadarIA!</h1>
+<body class="text-white">
+  <div id="particles-js"></div>
+
+  <div class="container mt-5" style="max-width: 700px;">
+    <h1 class="text-center text-light mb-4 fw-bold">Cryptoia🤖</h1>
+
+    <form method="POST" class="mb-4">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.pergunta.label(class="form-label") }}
+        {{ form.pergunta(class="form-control", rows=4, placeholder="Digite sua pergunta aqui...", id="pergunta_input") }}
+        {% for error in form.pergunta.errors %}
+          <div class="text-danger small mt-1">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      {{ form.enviar(class="btn btn-outline-light w-100") }}
+    </form>
+
+    <div class="mt-4 mb-4">
+      <h5>Sugestões de perguntas:</h5>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">O que é Bitcoin?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">Como funciona o blockchain?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">Qual a diferença entre Bitcoin e Ethereum?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">O que são Altcoins?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">O que é mineração de criptomoedas?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">O que é um Smart Contract?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">O que é DeFi?</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm suggestion-btn">Explique a volatilidade do mercado crypto.</button>
+      </div>
+    </div>
+
+    {% if resposta %}
+      <div class="alert alert-light" role="alert">
+        <h5 class="fw-bold">Resposta da IA:</h5>
+        <p>{{ resposta | safe }}</p>
+      </div>
+    {% endif %}
+
+
+    <a href="{{ url_for('index') }}" class="btn btn-danger">Voltar</a>
     
+  </div>
+
+  <script>
+    const perguntaTextarea = document.getElementById('pergunta_input');
+    const suggestionButtons = document.querySelectorAll('.suggestion-btn');
+
+    suggestionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        perguntaTextarea.value = button.textContent;
+      });
+    });
+  </script>
+
+  <!-- Configuração dos Particles -->
+<script>
+    particlesJS('particles-js', {
+        particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: {
+            value: 0.5,
+            random: true,
+            anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+        },
+        size: {
+            value: 3,
+            random: true,
+            anim: { enable: true, speed: 40, size_min: 0.1, sync: false }
+        },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 6, random: true, out_mode: "out" }
+        },
+        interactivity: {
+        events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+        }
+        },
+        retina_detect: true
+    });
+</script>
+
 </body>
 </html>
