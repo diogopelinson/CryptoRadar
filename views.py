@@ -1,7 +1,7 @@
-from flask import render_template, request, session, redirect, flash, url_for
+from flask import render_template, request, session, redirect, flash, url_for, jsonify
 from utils.helpers import FormularioUsuario, PerguntaForm
-from database.models import Usuarios
-from main import app, genai
+from database.models import Usuarios, Emails_envio
+from main import app, genai, db
 from flask_bcrypt import check_password_hash
 import requests
 
@@ -95,3 +95,30 @@ def cryptoia():
             flash(resposta, "danger")
 
     return render_template("cryptoia.html", form=form, resposta=resposta)
+
+
+@app.route('/inscrever-email', methods=['POST'])
+def inscrever_email():
+    data = request.get_json()
+    email = data.get('email')
+
+    if not email:
+        return jsonify({"mensagem": "Email é obrigatório"}), 400
+
+    existe = Emails_envio.query.filter_by(email=email).first()
+    if existe:
+        return jsonify({"mensagem": "Email já cadastrado"}), 409
+
+    novo_email = Emails_envio(email=email)
+    db.session.add(novo_email)
+    db.session.commit()
+
+    return jsonify({"mensagem": "Email cadastrado com sucesso!"}), 200
+
+
+
+@app.route('/api/emails')
+def api_emails():
+    emails = Emails_envio.query.all()
+    lista_emails = [{"email": e.email} for e in emails]  
+    return jsonify(lista_emails)

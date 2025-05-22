@@ -89,7 +89,53 @@
   </div>
 
   <button class="btn-refresh" onclick="location.reload()">Atualizar Cotações</button>
+  <div class="mt-4 text-center">
+  <p>Deseja que enviemos semanalmente atualizações sobre criptomoedas no seu e-mail?</p>
+  <button class="btn btn-outline-light btn-sm" onclick="mostrarFormulario()">Sim</button>
+  <form id="formEmail" style="display: none;" class="mt-2">
+    <input type="email" id="emailInput" name="email" placeholder="Digite seu e-mail" required class="form-control form-control-sm mb-2" style="max-width: 250px; margin: 0 auto;">
+    <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+  </form>
+  <p id="msgEmail" class="mt-2"></p>
 </div>
+
+<script>
+  function mostrarFormulario() {
+    document.getElementById('formEmail').style.display = 'block';
+  }
+
+  document.getElementById('formEmail').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('emailInput').value;
+    const msgEl = document.getElementById('msgEmail');
+    msgEl.textContent = '';
+
+    fetch('{{ url_for("inscrever_email") }}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token() }}'  
+      },
+      body: JSON.stringify({ email: email })
+    })
+    .then(response => {
+      if (response.ok) return response.json();
+      if (response.status === 409) throw new Error('Email já cadastrado');
+      throw new Error('Erro ao enviar o e-mail');
+    })
+    .then(data => {
+      msgEl.style.color = 'lightgreen';
+      msgEl.textContent = data.mensagem || 'Email cadastrado com sucesso!';
+      document.getElementById('formEmail').reset();
+    })
+    .catch(err => {
+      msgEl.style.color = 'salmon';
+      msgEl.textContent = err.message;
+    });
+  });
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
