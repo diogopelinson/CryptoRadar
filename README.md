@@ -49,10 +49,22 @@ Contribuições são bem-vindas! Por favor, abra issues ou pull requests para me
 
 ---
 
-## 📞 Contato
+## 🚀 Quer rodar esse projeto na sua máquina?
+Esse projeto é um pouquinho diferente… O n8n está rodando dentro de um container Docker na minha máquina, enquanto o backend Flask está rodando direto fora do Docker.
+Por conta disso, a configuração envolve detalhes importantes — como o uso de host.docker.internal — que podem variar dependendo de como você pretende rodar aí.
 
-Para dúvidas ou suporte, abra uma issue ou entre em contato pelo e-mail: diogopelinsonduartemoraes@email.com
+Para facilitar, me manda um e-mail e eu te envio todas as instruções personalizadas, passo a passo, pra você rodar sem complicação!
+
+📩 diogopelinsonduartemoraes@gmail.com
+
 
 ---
+## 🔗 Link
+Confira o vídeo com a demonstração prática do projeto:
 
-Obrigado por usar o CryptoRadar!
+👉 Assista aqui
+(link)
+
+🙌 Agradecimento
+Muito obrigado por conhecer e usar o CryptoRadar! 🚀
+Qualquer dúvida ou sugestão, fique à vontade para entrar em contato.
