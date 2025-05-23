@@ -92,7 +92,7 @@
       "name": "Groq Chat Model",
       "credentials": {
         "groqApi": {
-          "id": "zsj9lQnBi6ii1Nkg",
+          "id": "",
           "name": "Groq account"
         }
       }
