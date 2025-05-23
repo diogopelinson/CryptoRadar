@@ -1,0 +1,219 @@
+{
+  "name": "Envio Email Cripto",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:5000/api/emails",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        0
+      ],
+      "id": "f7d52a40-baba-41cc-8b2a-0ef0fd09a379",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -340,
+        0
+      ],
+      "id": "37dddf2a-6d73-4264-bac0-74172066c64e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "Escreva curiosidades pequenas, simples e resumidas sobre criptomoedas, mercado financeiro e NFTs. Cada curiosidade deve ser diferente das outras, com contextos variados, mas sempre dentro desses temas. Use uma linguagem amigável, clara e fácil de entender, como se estivesse explicando para alguém que está começando no assunto. Mantenha cada curiosidade com no máximo 2 frases, abrangendo tópicos como o funcionamento do mercado financeiro, o impacto das criptomoedas, novidades sobre NFTs, e tendências tecnológicas. Evite jargões técnicos e prefira termos simples.  TODO EMAIL ENVIAR APENAS 1 CURIOSIDADE"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        260,
+        0
+      ],
+      "id": "ad2f8099-000f-4b15-8b69-b88ffd2c8824",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d32eab2d-0ea5-4ca3-b03b-2679405140fd",
+              "name": "prompt",
+              "value": "Escreva curiosidades pequenas, simples e resumidas sobre criptomoedas, mercado financeiro e NFTs. Cada curiosidade deve ser diferente das outras, com contextos variados, mas sempre dentro desses temas. Use uma linguagem amigável, clara e fácil de entender, como se estivesse explicando para alguém que está começando no assunto. Mantenha cada curiosidade com no máximo 2 frases, abrangendo tópicos como o funcionamento do mercado financeiro, o impacto das criptomoedas, novidades sobre NFTs, e tendências tecnológicas. Evite jargões técnicos e prefira termos simples. TODO EMAIL ENVIAR APENAS 1 CURIOSIDADE",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        60,
+        0
+      ],
+      "id": "04a2d545-f933-46e5-9a2d-ad143c8abbb8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        240,
+        180
+      ],
+      "id": "c9e8d2ea-c094-4619-baf6-8567187d6cad",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "zsj9lQnBi6ii1Nkg",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "diogopelinsonduartemoraes@gmail.com",
+        "toEmail": "={{ $('HTTP Request').item.json.email }}",
+        "subject": "Seu boletim CryptoRadar: Curiosidade e novidades da semana! 🚀",
+        "html": "=<div style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 650px; margin: auto; padding: 30px; background: linear-gradient(135deg, #1e3c72, #2a5298); color: #fff; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);\">\n  \n  <h1 style=\"text-align: center; font-size: 28px; margin-bottom: 20px;\">🚀 CryptoRadar - Seu Boletim Premium</h1>\n  \n  <p style=\"font-size: 18px; line-height: 1.6;\">Olá, tudo certo?</p>\n\n  <p style=\"font-size: 16px; line-height: 1.6;\">\n    Bora começar a semana daquele jeito: café na mão ☕, olho no gráfico 📊 e sorriso no rosto 😄. \n    Aqui vai a sua <strong>curiosidade exclusiva da semana sobre criptomoedas</strong> pra já entrar na segundinha <em>on fire</em> 🔥:\n  </p>\n\n  <div style=\"background: rgba(255,255,255,0.1); padding: 20px; margin: 20px 0; border-left: 5px solid #FFD700; border-radius: 10px; font-style: italic;\">\n  {{ $json.output }}\n  </div>\n\n  <hr style=\"border: none; border-top: 2px solid rgba(255,255,255,0.3); margin: 30px 0;\">\n\n  <h2 style=\"font-size: 22px; margin-bottom: 15px;\">📊 Variação Semanal das Principais Criptomoedas</h2>\n\n  <table style=\"width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;\">\n    <thead>\n      <tr style=\"background-color: rgba(255,255,255,0.2);\">\n        <th style=\"padding: 12px; text-align: left;\">Criptomoeda</th>\n        <th style=\"padding: 12px; text-align: left;\">Variação</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td style=\"padding: 12px;\">Bitcoin (BTC)</td>\n        <td style=\"padding: 12px; color: #4CAF50;\">+3,2%</td>\n      </tr>\n      <tr style=\"background-color: rgba(255,255,255,0.05);\">\n        <td style=\"padding: 12px;\">Ethereum (ETH)</td>\n        <td style=\"padding: 12px; color: #F44336;\">-1,1%</td>\n      </tr>\n      <tr>\n        <td style=\"padding: 12px;\">Solana (SOL)</td>\n        <td style=\"padding: 12px; color: #4CAF50;\">+5,4%</td>\n      </tr>\n    </tbody>\n  </table>\n\n  <p style=\"margin-top: 30px; font-size: 16px;\">\n    Então já sabe: respira fundo, estuda o mercado e bora lucrar! 💰  \n    Se quiser mais insights, é só responder este e-mail.  \n    <br><br>\n    <em>Lembre-se: quem acorda cedo, compra cripto barato... ou pelo menos tenta! 😂</em>\n  </p>\n\n  <p style=\"text-align: center; margin-top: 40px; font-size: 14px; color: rgba(255,255,255,0.7);\">\n    Enviado automaticamente pelo <strong>CryptoRadar</strong> 🚀 | Powered by <strong>N8n & Agente IA</strong>\n  </p>\n\n</div>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        620,
+        0
+      ],
+      "id": "8351f096-16f3-45eb-842d-d5e62b1c2eab",
+      "name": "Send Email",
+      "webhookId": "9a1229ca-b6e4-477d-be63-545d08081ca1",
+      "credentials": {
+        "smtp": {
+          "id": "krZvguw6IwhMIArs",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('HTTP Request').item.json.email }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        360,
+        220
+      ],
+      "id": "096a4e10-cb65-489f-908b-cca4c8280c5f",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a9534444-d018-411b-b6b5-4231bcdc46b8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1e0ba8eb7e7b39b514d1c51b8b3063828d5515f4392cf524cc7ba7aa7970ac76"
+  },
+  "id": "ZCBA4UY4IFmCg8n5",
+  "tags": []
+}
