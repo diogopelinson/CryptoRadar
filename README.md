@@ -63,7 +63,7 @@ Para facilitar, me manda um e-mail e eu te envio todas as instruções personali
 Confira o vídeo com a demonstração prática do projeto:
 
 👉 Assista aqui
-(link)
+https://www.linkedin.com/posts/diogopelinsonmoraes_pythondeveloper-flaskframework-mysqldatabase-activity-7331676472107008000-LHqB?utm_source=social_share_send&utm_medium=android_app&rcm=ACoAAFbAFKwB2sysRlVa_tnkWpOf0_GR1_En-bo&utm_campaign=copy_link
 
 🙌 Agradecimento
 Muito obrigado por conhecer e usar o CryptoRadar! 🚀
